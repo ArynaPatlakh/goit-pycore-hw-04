@@ -4,20 +4,25 @@ def parse_input(user_input):
     return cmd, *args 
 
 def add_contact (args, contact):
-    
-    name, phone = args
-    contact[name] = phone
-    return "\nContact added."
+    try:
+        name, phone = args
+        contact[name] = phone
+        return "\nContact added."
+    except ValueError:
+        return "Please, enter both name and phone number data"
 
 def change_contact (args, contact: dict):
-    
-    name, phone = args
 
-    if name in contact:
-        contact[name] = phone
-        return "\nContact updated."
-    else:
-        return "\nContact with that name is not exist"
+    try:
+        name, phone = args
+
+        if name in contact:
+            contact[name] = phone
+            return "\nContact updated."
+        else:
+            return "\nContact with that name is not exist"
+    except ValueError:
+        return "Please, enter both name and phone number data"
 
 def show_phone(args, contact):
 
@@ -30,13 +35,15 @@ def show_phone(args, contact):
         return f"\nContact number for {name} not found."
 
 def all_contacts(contacts):
-    
+    all_contacts_list = []
     if len(contacts) > 0:
         for contact in contacts:
-            return f"{contact}: {contacts[contact]}"
+          contact = f"{contact}: {contacts[contact]}"
+          all_contacts_list.append(contact)
     else:
         return "No contacts found."
-    
+    return ("\n").join(all_contacts_list)
+
 def main():
     print("Welcome to the assistant bot!")
     contacts = {}
